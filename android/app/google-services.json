@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "205667931564",
+    "project_id": "centsible-d74b2",
+    "storage_bucket": "centsible-d74b2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205667931564:android:a88a8dc036e5b73e375609",
+        "android_client_info": {
+          "package_name": "com.example.centsible"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYyc1j9He7V_mQMlqEH4VXDiuwngutSQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
