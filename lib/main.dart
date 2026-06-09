@@ -90,7 +90,15 @@ class _AuthScreenState extends State<AuthScreen> {
         _showSnackbar('Welcome back to Centsible!', Colors.teal);
       } else {
         // --- REGISTRATION LOGIC ---
-        UserCredential userCredential = await FirebaseAuth.instance
+        // Use a temporary Firebase app so the main authStateChanges()
+        // listener never sees this sign-in and flashes the dashboard.
+        final tempApp = await Firebase.initializeApp(
+          name: 'TempApp',
+          options: Firebase.app().options,
+        );
+
+        final tempAuth = FirebaseAuth.instanceFor(app: tempApp);
+        UserCredential userCredential = await tempAuth
             .createUserWithEmailAndPassword(email: email, password: password);
 
         final uid = userCredential.user?.uid;
@@ -103,7 +111,14 @@ class _AuthScreenState extends State<AuthScreen> {
             'accountCreated': FieldValue.serverTimestamp(),
           });
         }
-        _showSnackbar('Account created successfully!', Colors.teal);
+
+        // Deletes the temp app (signs out the temp user automatically)
+        await tempApp.delete();
+
+        _emailController.clear();
+        _passwordController.clear();
+        _usernameController.clear();
+        _showSnackbar('Account created successfully! Please log in.', Colors.teal);
         setState(() => _isLogin = true);
       }
     } on FirebaseAuthException catch (e) {
